@@ -12,6 +12,7 @@ body{
   background:#f6f6f6;
 }
 
+/* HEADER */
 header{
   display:flex;
   align-items:center;
@@ -46,56 +47,7 @@ p{
   border-radius:15px;
 }
 
-/* Для экранов шириной до 768px (телефоны) */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-    padding: 80px 30px 30px 30px;
-  }
-
-  .text {
-    max-width: 80%;
-    font-size: 12px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-
-  .hero img {
-    width: 60%;
-    border-radius: 10px;
-  }
-  .product {
-  flex-direction: column;
-  text-align: center;
-  margin: 20px;
-}
-
-.product img {
-  width: 70%;
-}
-
-.product-info {
-  width: 100%;
-}
-  .product {
-  flex-direction: column;
-  text-align: center;
-  margin: 20px;
-}
-
-.product img {
-  width: 70%;
-}
-
-.product-info {
-  width: 100%;
-}
-
-/* кошик слева сверху */
+/* КОРЗИНА */
 #cart-button {
   position: fixed;
   top: 20px;
@@ -114,143 +66,171 @@ p{
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  #cart-button {
-    top: 15px;
-    left: 15px;
-    font-size: 16px;
-    padding: 8px 12px;
-  }
-}
-
+/* ТОВАРИ */
 .product {
-  display: flex;           /* картинка и описание рядом */
-  align-items: center;     /* вертикальное выравнивание */
-  background: white;
-  padding: 20px;
-  margin: 20px 60px;
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  gap: 20px;               /* расстояние между картинкой и текстом */
+  display:flex;
+  align-items:center;
+  background:white;
+  padding:20px;
+  margin:20px 60px;
+  border-radius:15px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+  gap:20px;
 }
 
-.product img {
-  width: 200px;             /* размер картинки */
-  border-radius: 10px;
+.product img{
+  width:200px;
+  border-radius:10px;
 }
 
-.product-info h2 {
-  margin: 0 0 10px 0;
-  font-size: 24px;
+.product-info h2{
+  margin:0 0 10px 0;
+  font-size:24px;
 }
 
-.product-info p {
-  margin: 0 0 15px 0;
-  font-size: 16px;
+.product-info p{
+  margin:0 0 15px 0;
+  font-size:16px;
 }
 
-.product-info button {
-  padding: 10px 20px;
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+.product-info button{
+  padding:10px 20px;
+  background:#ff4d6d;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.price {
-  font-weight: bold;
-  font-size: 18px;
-  color: black;
-  margin-bottom: 10px;
+.price{
+  font-weight:bold;
+  font-size:18px;
+  color:black;
+  margin-bottom:10px;
+}
+
+/* МОБІЛЬНА ВЕРСІЯ */
+@media (max-width:768px){
+header{
+  flex-direction:column;
+  text-align:center;
+  gap:20px;
+  padding:80px 30px 30px 30px;
+}
+
+.text{
+  max-width:80%;
+  font-size:12px;
+}
+
+h1{
+  font-size:24px;
+}
+
+.hero img{
+  width:70%;
+  border-radius:10px;
+}
+
+#cart-button{
+  top:15px;
+  left:15px;
+  font-size:16px;
+  padding:8px 12px;
+}
+
+.product{
+  flex-direction:column;
+  text-align:center;
+  margin:20px;
+}
+
+.product img{
+  width:70%;
+}
+
+.product-info{
+  width:100%;
+}
 }
 </style>
 </head>
 
-<script>
-let cart = 0;
-
-function addToCart() {
-  cart++;
-  document.getElementById('cart-button').innerText = "Корзина 🛒: " + cart;
-}
-</script>
-
 <body>
 
-<!-- Кошик слева сверху -->
 <div id="cart-button">
-  <a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
+<a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
 </div>
 
 <header>
-  <div class="text">
-    <h1>Brim Dream Box</h1>
-    <p>
-      Привіт! Ми — Brim Dream Box, і ми тут, щоб кожен твій подарунок дарував посмішку.<br>
-      У нас є все для суперподарунка на будь-яке свято.<br>
-      Все вже готово — просто замовляй, а ми подбаємо про решту!
-    </p>
-  </div>
-
-  <div class="hero">
-    <img src="gift.jpg.png" alt="Подарок">
-  </div>
-</header>
-
-<!-- Пример товара -->
-<div class="product">
-  <img src="bokc1.png.jpg" alt="Бокс №1">
-  <div class="product-info">
-    <h2>Бокс №1</h2>
-    <p>Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка</p>
-    <div class="price">Ціна: 600 грн</div>
-    <button onclick="addToCart('Бокс №1','bokc1.png.jpg', 600)">Купити</button>
-  </div>
+<div class="text">
+<h1>Brim Dream Box</h1>
+<p>
+Привіт! Ми — Brim Dream Box, і ми тут, щоб кожен твій подарунок дарував посмішку.<br>
+У нас є все для суперподарунка на будь-яке свято.<br>
+Все вже готово — просто замовляй, а ми подбаємо про решту!
+</p>
 </div>
 
-<!-- Другий товар -->
+<div class="hero">
+<img src="gift.jpg.png" alt="Подарок">
+</div>
+</header>
+
 <div class="product">
-  <img src="bokc2.png.webp" alt="Бокс №2">
-  <div class="product-info">
-    <h2>Бокс №2</h2>
-    <p>Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка</p>
-    <div class="price">Ціна: 650 грн</div>
-    <button onclick="addToCart('Бокс №2','bokc2.png.webp', 650)">Купити</button>
-  </div>
+<img src="bokc1.png.jpg" alt="Бокс №1">
+<div class="product-info">
+<h2>Бокс №1</h2>
+<p>Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка</p>
+<div class="price">Ціна: 600 грн</div>
+<button onclick="addToCart('Бокс №1','bokc1.png.jpg',600)">Купити</button>
+</div>
+</div>
+
+<div class="product">
+<img src="bokc2.png.webp" alt="Бокс №2">
+<div class="product-info">
+<h2>Бокс №2</h2>
+<p>Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка</p>
+<div class="price">Ціна: 650 грн</div>
+<button onclick="addToCart('Бокс №2','bokc2.png.webp',650)">Купити</button>
+</div>
 </div>
 
 <script>
-let cartCount = 0;
-
-// Відновлюємо лічильник з localStorage
-if(localStorage.getItem('cartItems')){
-  let savedItems = JSON.parse(localStorage.getItem('cartItems'));
-  cartCount = savedItems.reduce((sum, item) => sum + item.qty, 0);
+// Обновление счетчика корзины
+function updateCartCount(){
+  let cartCount = 0;
+  if(localStorage.getItem('cartItems')){
+    let savedItems = JSON.parse(localStorage.getItem('cartItems'));
+    cartCount = savedItems.reduce((sum,item)=>sum+item.qty,0);
+  }
   document.getElementById('cart-count').innerText = cartCount;
 }
 
-function addToCart(name, img, price){
-  cartCount++;
-  document.getElementById('cart-count').innerText = cartCount;
-
-  // Отримуємо поточні товари з localStorage
+// Добавление товара в корзину
+function addToCart(name,img,price){
   let cartItems = [];
   if(localStorage.getItem('cartItems')){
     cartItems = JSON.parse(localStorage.getItem('cartItems'));
   }
-
-  // Перевірка, чи товар уже в кошику
   let found = cartItems.find(item => item.name === name);
   if(found){
     found.qty++;
   } else {
-    cartItems.push({name: name, img: img, qty: 1, price: price});
+    cartItems.push({name:name,img:img,qty:1,price:price});
   }
+  localStorage.setItem('cartItems',JSON.stringify(cartItems));
 
-  // Зберігаємо у localStorage
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  // обновляем счетчик
+  updateCartCount();
 }
+
+// обновляем при загрузке страницы
+updateCartCount();
+
+// обновляем когда пользователь возвращается на вкладку
+window.addEventListener("focus", updateCartCount);
 </script>
 
 </body>
