@@ -59,39 +59,59 @@ button#order { margin-top:20px; padding:10px 20px; background:#ff4d6d; color:whi
 /* Мобільні стилі для телефонів */
 @media (max-width: 768px) {
   .cart-item {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column;      /* картинка сверху, текст и кнопки снизу */
+    align-items: center;         /* всё по центру */
     text-align: center;
-    padding: 15px;
-    margin: 10px 5px;
+    padding: 20px;               /* больше padding */
+    margin: 10px 5px;            /* немного больше отступы */
   }
 
   .cart-item img {
-    width: 60px;
+    width: 100px;                /* увеличенная картинка */
     margin-bottom: 10px;
+  }
+
+  .cart-item-info {
+    font-size: 16px;             /* текст крупнее */
+    line-height: 1.5;
   }
 
   .cart-item-controls {
     display: flex;
-    gap: 5px;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 5px;
+    gap: 8px;                    /* больше пространство между кнопками */
+    margin-top: 10px;
+  }
+
+  .cart-item-controls button {
+    padding: 8px 16px;           /* кнопки крупнее */
+    font-size: 16px;
   }
 
   #order {
-    width: 90%;
+    width: 95%;
     margin: 20px auto 0 auto;
+    padding: 12px 20px;
+    font-size: 16px;
   }
 
   #order-form {
-    width: 90%;
+    width: 95%;
     margin: 20px auto;
-    padding: 15px;
+    padding: 20px;
   }
 
-  #order-form input, #order-form select, #order-form textarea {
-    width: 100%;
+  #order-form input, 
+  #order-form select, 
+  #order-form textarea {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  #total-price {
+    font-size: 18px;
+    margin-top: 15px;
   }
 }
 </style>
@@ -279,3 +299,5 @@ window.onload = displayCart;
 </script>
 </body>
 </html>
+</html>
+
