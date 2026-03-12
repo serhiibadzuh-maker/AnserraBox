@@ -1,53 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Brim Dream Box</title>
-
 <style>
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Arial, sans-serif;
   background:#f6f6f6;
 }
 
-/* HEADER */
-header{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:60px;
-  padding:60px;
-  background:white;
-}
-
-.text{
-  max-width:500px;
-  background: linear-gradient(90deg, #ff69b4, #ff1493);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-h1{
-  font-size:40px;
-  margin-bottom:20px;
-  background: linear-gradient(90deg, #ff1493, #ff69b4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-p{
-  font-size:18px;
-  line-height:1.6;
-}
-
-.hero img{
-  width:400px;
-  border-radius:15px;
-}
-
-/* КОРЗИНА */
+/* Кошик */
 #cart-button {
   position: fixed;
   top: 20px;
@@ -59,14 +23,87 @@ p{
   border-radius: 8px;
   z-index: 1000;
 }
-
 #cart-button a {
   text-decoration: none;
   color: white;
   font-weight: bold;
 }
 
-/* ТОВАРИ */
+/* HEADER */
+header{
+  background:white;
+  padding:60px;
+}
+.header-content{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+}
+.text{
+  max-width:500px;
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text h1{
+  font-size:40px;
+  margin-bottom:20px;
+  background: linear-gradient(90deg, #ff1493, #ff69b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text p{
+  font-size:18px;
+  line-height:1.6;
+  margin:0;
+}
+.hero img{
+  width:400px;
+  border-radius:15px;
+}
+
+/* Кнопка сортування перед товарами */
+#sort-dropdown{
+  display:flex;
+  justify-content:flex-end;
+  margin:20px 60px 0 60px;
+  position:relative;
+  z-index:10;
+}
+#sort-dropdown button{
+  padding:10px 20px;
+  background:#ff69b4;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+#sort-dropdown-content{
+  display:none;
+  position:absolute;
+  right:0;
+  background:white;
+  min-width:180px;
+  box-shadow:0 0 5px rgba(0,0,0,0.3);
+  border-radius:8px;
+  overflow:hidden;
+}
+#sort-dropdown-content button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:white;
+  color:#ff4d6d;
+  cursor:pointer;
+  text-align:left;
+}
+#sort-dropdown-content button:hover{
+  background:#ffe6f0;
+}
+
+/* Товари */
 .product {
   display:flex;
   align-items:center;
@@ -77,22 +114,18 @@ p{
   box-shadow:0 0 10px rgba(0,0,0,0.1);
   gap:20px;
 }
-
 .product img{
   width:200px;
   border-radius:10px;
 }
-
 .product-info h2{
   margin:0 0 10px 0;
   font-size:24px;
 }
-
 .product-info p{
   margin:0 0 15px 0;
   font-size:16px;
 }
-
 .product-info button{
   padding:10px 20px;
   background:#ff4d6d;
@@ -101,7 +134,6 @@ p{
   border-radius:8px;
   cursor:pointer;
 }
-
 .price{
   font-weight:bold;
   font-size:18px;
@@ -109,96 +141,110 @@ p{
   margin-bottom:10px;
 }
 
-/* МОБІЛЬНА ВЕРСІЯ */
+/* Мобільна версія */
 @media (max-width:768px){
-header{
-  flex-direction:column;
-  text-align:center;
-  gap:20px;
-  padding:80px 30px 30px 30px;
+  header{
+    padding:40px 20px;
+  }
+  .header-content{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:20px;
+  }
+  .text h1{
+    font-size:24px;
+  }
+  .text p{
+    font-size:16px;
+  }
+  #sort-dropdown{
+    margin:10px 20px;
+  }
+  .hero img{
+    width:70%;
+    max-width:300px;
+  }
+  .product{
+    flex-direction:column;
+    text-align:center;
+  }
+  .product img{
+    width:70%;
+  }
+  .product-info{
+    width:100%;
+  }
 }
-
-.text{
-  max-width:80%;
-  font-size:12px;
-}
-
-h1{
-  font-size:24px;
-}
-
-.hero img{
-  width:70%;
-  border-radius:10px;
-}
-
-#cart-button{
-  top:15px;
-  left:15px;
-  font-size:16px;
-  padding:8px 12px;
-}
-
-.product{
-  flex-direction:column;
-  text-align:center;
-  margin:20px;
-}
-
-.product img{
-  width:70%;
-}
-
-.product-info{
-  width:100%;
-}
+/* Анімація додавання в кошик */
+.flying-img {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  transition: all 0.8s ease-in-out;
+  z-index: 2000;
 }
 </style>
 </head>
-
 <body>
 
+<!-- Кошик -->
 <div id="cart-button">
 <a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
 </div>
 
+<!-- Шапка -->
 <header>
-<div class="text">
-<h1>Brim Dream Box</h1>
-<p>
-Привіт! Ми — Brim Dream Box, і ми тут, щоб кожен твій подарунок дарував посмішку.<br>
-У нас є все для суперподарунка на будь-яке свято.<br>
-Все вже готово — просто замовляй, а ми подбаємо про решту!
-</p>
-</div>
-
-<div class="hero">
-<img src="gift.jpg.png" alt="Подарок">
-</div>
+  <div class="header-content">
+    <div class="text">
+      <h1>Brim Dream Box</h1>
+      <p>
+        Привіт! Ми — Brim Dream Box, і ми тут, щоб кожен твій подарунок дарував посмішку.<br>
+        У нас є все для суперподарунка на будь-яке свято.<br>
+        Все вже готово — просто замовляй, а ми подбаємо про решту!
+      </p>
+    </div>
+    <div class="hero">
+      <img src="gift.jpg.png" alt="Подарунок">
+    </div>
+  </div>
 </header>
 
-<div class="product">
-<img src="bokc1.png.jpg" alt="Бокс №1">
-<div class="product-info">
-<h2>Бокс №1</h2>
-<p>Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка</p>
-<div class="price">Ціна: 600 грн</div>
-<button onclick="addToCart('Бокс №1','bokc1.png.jpg',600)">Купити</button>
-</div>
+<!-- Кнопка сортування перед товарами -->
+<div id="sort-dropdown">
+  <button onclick="toggleSort()">Сортувати ▼</button>
+  <div id="sort-dropdown-content">
+    <button onclick="sortProducts('asc'); toggleSort()">Від дешевих до дорогих</button>
+    <button onclick="sortProducts('desc'); toggleSort()">Від дорогих до дешевих</button>
+  </div>
 </div>
 
-<div class="product">
-<img src="bokc2.png.webp" alt="Бокс №2">
-<div class="product-info">
-<h2>Бокс №2</h2>
-<p>Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка</p>
-<div class="price">Ціна: 650 грн</div>
-<button onclick="addToCart('Бокс №2','bokc2.png.webp',650)">Купити</button>
-</div>
+<!-- Товари -->
+<div id="products-container">
+  <div class="product" data-price="600">
+    <img src="bokc1.png.jpg" alt="Бокс №1">
+    <div class="product-info">
+      <h2>Бокс №1</h2>
+      <p>Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка</p>
+      <div class="price">Ціна: 600 грн</div>
+      <button onclick="addToCart('Бокс №1','bokc1.png.jpg',600,this)">Купити</button>
+    </div>
+  </div>
+
+  <div class="product" data-price="650">
+    <img src="bokc2.png.webp" alt="Бокс №2">
+    <div class="product-info">
+      <h2>Бокс №2</h2>
+      <p>Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка</p>
+      <div class="price">Ціна: 650 грн</div>
+      <button onclick="addToCart('Бокс №2','bokc2.png.webp',650,this)">Купити</button>
+    </div>
+  </div>
 </div>
 
 <script>
-// Обновление счетчика корзины
+// Кошик
 function updateCartCount(){
   let cartCount = 0;
   if(localStorage.getItem('cartItems')){
@@ -208,8 +254,8 @@ function updateCartCount(){
   document.getElementById('cart-count').innerText = cartCount;
 }
 
-// Добавление товара в корзину
-function addToCart(name,img,price){
+// Додати товар
+function addToCart(name, img, price, btn){
   let cartItems = [];
   if(localStorage.getItem('cartItems')){
     cartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -218,19 +264,52 @@ function addToCart(name,img,price){
   if(found){
     found.qty++;
   } else {
-    cartItems.push({name:name,img:img,qty:1,price:price});
+    cartItems.push({name:name, img:img, qty:1, price:price});
   }
-  localStorage.setItem('cartItems',JSON.stringify(cartItems));
-
-  // обновляем счетчик
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
   updateCartCount();
+
+  // --- Анімація польоту картинки ---
+  const imgEl = btn.closest('.product').querySelector('img');
+  const flying = imgEl.cloneNode(true);
+  flying.classList.add('flying-img');
+  document.body.appendChild(flying);
+  const rect = imgEl.getBoundingClientRect();
+  flying.style.left = rect.left + 'px';
+  flying.style.top = rect.top + 'px';
+  
+  const cartRect = document.getElementById('cart-button').getBoundingClientRect();
+  setTimeout(() => {
+    flying.style.left = cartRect.left + 'px';
+    flying.style.top = cartRect.top + 'px';
+    flying.style.width = '30px';
+    flying.style.height = '30px';
+    flying.style.opacity = '0.5';
+  }, 10);
+  
+  setTimeout(() => {
+    document.body.removeChild(flying);
+  }, 900);
 }
 
-// обновляем при загрузке страницы
-updateCartCount();
+// Сортування
+function toggleSort(){
+  const content = document.getElementById('sort-dropdown-content');
+  content.style.display = content.style.display==='block'?'none':'block';
+}
+function sortProducts(order){
+  const container = document.getElementById('products-container');
+  const products = Array.from(container.children);
+  products.sort((a,b)=>{
+    const priceA = parseInt(a.dataset.price);
+    const priceB = parseInt(b.dataset.price);
+    return order==='asc'?priceA-priceB:priceB-priceA;
+  });
+  products.forEach(p=>container.appendChild(p));
+}
 
-// обновляем когда пользователь возвращается на вкладку
-window.addEventListener("focus", updateCartCount);
+// Ініціалізація
+updateCartCount();
 </script>
 
 </body>
