@@ -58,52 +58,97 @@ button#order { margin-top:20px; padding:10px 20px; background:#ff4d6d; color:whi
 
 /* Мобільні стилі для телефонів */
 @media (max-width: 768px) {
+
+  body{
+    padding:20px;
+  }
+
+  h1{
+    font-size:36px;
+    text-align:center;
+  }
+
   .cart-item {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 20px;
-    margin: 10px 5px;
+    padding: 35px;
+    margin: 20px 0;
+    border-radius: 15px;
   }
+
+  /* Іконка товару */
   .cart-item img {
-    width: 100px;
-    margin-bottom: 10px;
+    width: 240px; /* було 80 → стало приблизно в 3 рази більше */
+    margin-bottom: 20px;
   }
+
+  /* Текст товару */
   .cart-item-info {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 26px;
+    line-height: 1.7;
   }
+
+  /* Кнопки керування */
   .cart-item-controls {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 15px;
+    margin-top: 20px;
   }
+
   .cart-item-controls button {
-    padding: 8px 16px;
-    font-size: 16px;
+    padding: 18px 30px;
+    font-size: 28px;
+    border-radius: 12px;
   }
-  #order {
-    width: 95%;
-    margin: 20px auto 0 auto;
-    padding: 12px 20px;
-    font-size: 16px;
-  }
-  #order-form {
-    width: 95%;
-    margin: 20px auto;
-    padding: 20px;
-  }
-  #order-form input, 
-  #order-form select, 
-  #order-form textarea {
-    font-size: 16px;
-    padding: 8px;
-  }
+
+  /* Загальна сума */
   #total-price {
-    font-size: 18px;
-    margin-top: 15px;
+    font-size: 30px;
+    text-align:center;
+    margin-top:30px;
+  }
+
+  /* Кнопка оформлення */
+  #order {
+    width:100%;
+    padding:20px;
+    font-size:28px;
+    border-radius:12px;
+  }
+
+  /* Форма замовлення */
+  #order-form {
+    width:100%;
+    padding:35px;
+    margin-top:25px;
+  }
+
+  #order-form h2{
+    font-size:32px;
+    margin-bottom:20px;
+  }
+
+  #order-form label{
+    font-size:22px;
+  }
+
+  #order-form input,
+  #order-form select,
+  #order-form textarea {
+    font-size:22px;
+    padding:15px;
+    margin-bottom:18px;
+    border-radius:8px;
+  }
+
+  #order-form button{
+    width:100%;
+    font-size:26px;
+    padding:18px;
+    border-radius:12px;
   }
 }
 </style>
