@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+head>
+<meta charset="UTF-8">
+<title>Brim Dream Box</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f6f6f6;
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+  padding:60px;
+  background:white;
+}
+
+.text{
+  max-width:500px;
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1{
+  font-size:40px;
+  margin-bottom:20px;
+  background: linear-gradient(90deg, #ff1493, #ff69b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p{
+  font-size:18px;
+  line-height:1.6;
+}
+
+.hero img{
+  width:400px;
+  border-radius:15px;
+}
+
+/* Для экранов шириной до 768px (телефоны) */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .text {
+    max-width: 80%;
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .hero img {
+    width: 60%;
+    border-radius: 10px;
+  }
+}
+
+/* кошик слева сверху */
+#cart-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+  background: #ff69b4;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+#cart-button a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  #cart-button {
+    top: 15px;
+    left: 15px;
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+}
+
+.product {
+  display: flex;           /* картинка и описание рядом */
+  align-items: center;     /* вертикальное выравнивание */
+  background: white;
+  padding: 20px;
+  margin: 20px 60px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  gap: 20px;               /* расстояние между картинкой и текстом */
+}
+
+.product img {
+  width: 200px;             /* размер картинки */
+  border-radius: 10px;
+}
+
+.product-info h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+}
+
+.product-info p {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+}
+
+.product-info button {
+  padding: 10px 20px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+
+<script>
+let cart = 0;
+
+function addToCart() {
+  cart++;
+  document.getElementById('cart-button').innerText = "Корзина 🛒: " + cart;
+}
+</script>
+
+<body>
+
+<!-- Кошик слева сверху -->
+<div id="cart-button">
+  <a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
+</div>
+
+<header>
+  <div class="text">
+    <h1>Brim Dream Box</h1>
+    <p>
+      Привіт! Ми — Brim Dream Box, і ми тут, щоб кожен твій подарунок дарував посмішку.<br>
+      У нас є все для суперподарунка на будь-яке свято.<br>
+      Все вже готово — просто замовляй, а ми подбаємо про решту!
+    </p>
+  </div>
+
+  <div class="hero">
+    <img src="gift.jpg.png" alt="Подарок">
+  </div>
+</header>
+
+<!-- Пример товара -->
+<div class="product">
+  <img src="bokc1.png.jpg" alt="Бокс №1">
+  <div class="product-info">
+    <h2>Бокс №1</h2>
+    <p>Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка</p>
+    <div class="price">Ціна: 600 грн</div>
+    <button onclick="addToCart('Бокс №1','bokc1.png.jpg', 600)">Купити</button>
+  </div>
+</div>
+
+<!-- Другий товар -->
+<div class="product">
+  <img src="bokc2.png.webp" alt="Бокс №2">
+  <div class="product-info">
+    <h2>Бокс №2</h2>
+    <p>Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка</p>
+    <div class="price">Ціна: 650 грн</div>
+    <button onclick="addToCart('Бокс №2','bokc2.png.webp', 650)">Купити</button>
+  </div>
+</div>
+
+<script>
+let cartCount = 0;
+
+// Відновлюємо лічильник з localStorage
+if(localStorage.getItem('cartItems')){
+  let savedItems = JSON.parse(localStorage.getItem('cartItems'));
+  cartCount = savedItems.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cart-count').innerText = cartCount;
+}
+
+function addToCart(name, img, price){
+  cartCount++;
+  document.getElementById('cart-count').innerText = cartCount;
+
+  // Отримуємо поточні товари з localStorage
+  let cartItems = [];
+  if(localStorage.getItem('cartItems')){
+    cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  }
+
+  // Перевірка, чи товар уже в кошику
+  let found = cartItems.find(item => item.name === name);
+  if(found){
+    found.qty++;
+  } else {
+    cartItems.push({name: name, img: img, qty: 1, price: price});
+  }
+
+  // Зберігаємо у localStorage
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
+</script>
+
+</body>
+</html>
