@@ -187,13 +187,35 @@ header{
   transition: all 0.8s ease-in-out;
   z-index: 2000;
 }
+/* Кнопка конструктора */
+#constructor-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 18px;
+  background: #ff69b4;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+#constructor-button a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
 
 <!-- Кошик -->
 <div id="cart-button">
-<a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
+  <a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
+</div>
+
+<!-- Конструктор -->
+<div id="constructor-button">
+  <a href="constructor.html">Конструктор боксу</a>
 </div>
 
 <!-- Шапка -->
