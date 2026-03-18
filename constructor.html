@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Конструктор боксу</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f6f6f6;
+}
+
+/* Кошик */
+#cart-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #ff69b4;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+#cart-button a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* Контент */
+.container{
+  padding:100px 20px 40px;
+  max-width:900px;
+  margin:auto;
+}
+
+h1{
+  text-align:center;
+}
+
+.step{
+  background:white;
+  padding:20px;
+  margin-bottom:20px;
+  border-radius:15px;
+}
+
+.carousel{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.carousel img{
+  width:150px;
+  border-radius:10px;
+}
+
+.arrow{
+  font-size:24px;
+  cursor:pointer;
+}
+
+.options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.option{
+  background:#ffe6f0;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.option.active{
+  background:#ff4d6d;
+  color:white;
+}
+
+.price{
+  font-size:14px;
+}
+
+button{
+  margin-top:10px;
+  padding:8px 15px;
+  background:#ff4d6d;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="cart-button">
+<a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
+</div>
+
+<div class="container">
+<h1>Конструктор боксу 🎁</h1>
+
+<!-- Чашка -->
+<div class="step">
+<h2>1. Обери чашку</h2>
+<div class="carousel">
+<span class="arrow" onclick="prev('cup')">⬅️</span>
+<img id="cup-img" src="cup1.jpg">
+<span class="arrow" onclick="next('cup')">➡️</span>
+</div>
+<p class="price">Ціна: <span id="cup-price">100</span> грн</p>
+<button onclick="selectItem('cup')">Обрати</button>
+</div>
+
+<!-- Свічка -->
+<div class="step">
+<h2>2. Свічка</h2>
+<img src="candle.jpg" width="120">
+<p class="price">Ціна: 80 грн</p>
+<button onclick="selectFixed('candle',80)">Обрати</button>
+</div>
+
+<!-- Ложка -->
+<div class="step">
+<h2>3. Ложка</h2>
+<img src="spoon.jpg" width="120">
+<p class="price">Ціна: 50 грн</p>
+<button onclick="selectFixed('spoon',50)">Обрати</button>
+</div>
+
+<!-- Шкарпетки -->
+<div class="step">
+<h2>4. Шкарпетки</h2>
+<img src="socks.jpg" width="120">
+<p class="price">Ціна: 120 грн</p>
+<button onclick="selectFixed('socks',120)">Обрати</button>
+</div>
+
+<!-- Чай -->
+<div class="step">
+<h2>5. Чай</h2>
+<div class="carousel">
+<span class="arrow" onclick="prev('tea')">⬅️</span>
+<img id="tea-img" src="tea1.png">
+<span class="arrow" onclick="next('tea')">➡️</span>
+</div>
+<p class="price">Ціна: <span id="tea-price">90</span> грн</p>
+<button onclick="selectItem('tea')">Обрати</button>
+</div>
+
+<!-- Крем -->
+<div class="step">
+<h2>6. Крем для рук</h2>
+<div class="carousel">
+<span class="arrow" onclick="prev('cream')">⬅️</span>
+<img id="cream-img" src="cream1.jpg">
+<span class="arrow" onclick="next('cream')">➡️</span>
+</div>
+<p class="price">Ціна: <span id="cream-price">70</span> грн</p>
+<button onclick="selectItem('cream')">Обрати</button>
+</div>
+
+<!-- Додатково -->
+<div class="step">
+<h2>Додатково</h2>
+
+<div class="options">
+<div class="option" onclick="toggleOption(this,100)">Цукерки Kinder <br><span class="price">100 грн</span></div>
+<div class="option" onclick="toggleOption(this,40)">Листівка <br><span class="price">40 грн</span></div>
+<div class="option" onclick="toggleOption(this,120)">Букетик сухоцвітів <br><span class="price">120 грн</span></div>
+<div class="option active">Коробка (включено)</div>
+</div>
+
+</div>
+
+<!-- СУММА -->
+<div class="step">
+<h2>Загальна сума</h2>
+<p id="total">0 грн</p>
+<button onclick="buyBox()">Купити</button>
+</div>
+
+</div>
+
+<script>
+// Кошик
+function updateCartCount(){
+  let cartCount = 0;
+  if(localStorage.getItem('cartItems')){
+    let savedItems = JSON.parse(localStorage.getItem('cartItems'));
+    cartCount = savedItems.reduce((sum,item)=>sum+item.qty,0);
+  }
+  document.getElementById('cart-count').innerText = cartCount;
+}
+updateCartCount();
+
+const data = {
+  cup: {
+    index: 0,
+    images: [
+      "images/cup1.png",
+      "images/cup2.webp",
+      "images/cup3.webp",
+      "images/cup4.webp",
+      "images/cup5.webp",
+      "images/cup6.webp",
+      "images/cup7.webp",
+      "images/cup8.webp",
+      "images/cup9.webp",
+      "images/cup10.webp",
+      "images/cup11.webp",
+      "images/cup12.webp",
+      "images/cup13.webp",
+      "images/cup14.webp",
+      "images/cup15.webp",
+      "images/cup16.webp"
+    ],
+    prices: [100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250]
+  },
+  tea: {
+    index: 0,
+    images: [
+      "images/tea1.png",
+      "images/tea2.png",
+      "images/tea3.png",
+      "images/tea4.png",
+      "images/tea5.png",
+      "images/tea6.png"
+    ],
+    prices: [90,95,100,105,110,120]
+  },
+  cream: {
+    index: 0,
+    images: ["images/cream1.jpg","images/cream2.jpg","images/cream3.jpg"],
+    prices: [70,80,90]
+  }
+};
+
+let selected = {cup:0,tea:0,cream:0,candle:0,spoon:0,socks:0,extras:[]};
+
+// КАРУСЕЛЬ
+function update(type){
+  document.getElementById(type+'-img').src = data[type].images[data[type].index];
+  document.getElementById(type+'-price').innerText = data[type].prices[data[type].index];
+}
+function next(type){
+  data[type].index=(data[type].index+1)%data[type].images.length;
+  update(type);
+}
+function prev(type){
+  data[type].index=(data[type].index-1+data[type].images.length)%data[type].images.length;
+  update(type);
+}
+
+// ВИБІР
+function selectItem(type){
+  selected[type]=data[type].prices[data[type].index];
+  calculateTotal();
+}
+function selectFixed(type,price){
+  selected[type]=price;
+  calculateTotal();
+}
+function toggleOption(el,price){
+  el.classList.toggle('active');
+  if(el.classList.contains('active')){
+    selected.extras.push(price);
+  }else{
+    selected.extras = selected.extras.filter(p=>p!==price);
+  }
+  calculateTotal();
+}
+
+// СУМА
+function calculateTotal(){
+  let total=0;
+  for(let key in selected){
+    if(Array.isArray(selected[key])){
+      total+=selected[key].reduce((a,b)=>a+b,0);
+    }else{
+      total+=selected[key];
+    }
+  }
+  document.getElementById('total').innerText=total+" грн";
+}
+
+// КУПИТИ
+function buyBox(){
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  cartItems.push({
+    name:"Конструктор боксу",
+    img:"box.png",
+    qty:1,
+    price:document.getElementById('total').innerText
+  });
+
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  updateCartCount();
+
+  alert("Бокс додано у кошик!");
+}
+
+// Инициализация каруселей
+update('cup');
+update('tea');
+update('cream');
+
+</script>
+
+</body>
+</html>
