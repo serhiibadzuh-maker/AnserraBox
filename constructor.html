@@ -12,14 +12,57 @@ body{
   background:#f6f6f6;
 }
 
-#cart-button {
+/* БУРГЕР */
+#menu-button {
   position: fixed;
   top: 20px;
   left: 20px;
+  font-size: 26px;
+  background: #ff69b4;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  z-index: 1100;
+  cursor: pointer;
+}
+
+/* ШТОРКА */
+#side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: white;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  padding-top: 80px;
+  transition: 0.3s;
+  z-index: 1050;
+}
+
+#side-menu a {
+  display: block;
+  padding: 15px 25px;
+  text-decoration: none;
+  color: #ff4d6d;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#side-menu a:hover {
+  background: #ffe6f0;
+}
+
+/* КОШИК */
+#cart-button {
+  position: fixed;
+  top: 20px;
+  left: 80px;
   background: #ff69b4;
   color: white;
   padding: 10px 15px;
   border-radius: 8px;
+  z-index: 1000;
 }
 #cart-button a{
   color:white;
@@ -27,6 +70,7 @@ body{
   font-weight:bold;
 }
 
+/* ОСНОВА */
 .container{
   padding:100px 20px 40px;
   max-width:900px;
@@ -54,6 +98,8 @@ h1{
 
 .carousel img{
   width:150px;
+  max-height:150px;
+  object-fit: contain;
   border-radius:10px;
 }
 
@@ -74,11 +120,20 @@ h1{
   padding:10px;
   border-radius:8px;
   cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
 }
 
 .option.active{
   background:#ff4d6d;
   color:white;
+}
+
+.option img{
+  width:40px;
+  height:auto;
 }
 
 .price{
@@ -130,13 +185,23 @@ button{
 }
 
 .selected-item.spoon img{
-  width:25px; /* ложка в 2 раза меньше */
+  width:25px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- БУРГЕР -->
+<div id="menu-button" onclick="toggleMenu()">☰</div>
+
+<!-- ШТОРКА -->
+<div id="side-menu">
+  <a href="index.html">Меню</a>
+  <a href="constructor.html">Конструктор боксу</a>
+</div>
+
+<!-- КОШИК -->
 <div id="cart-button">
 <a href="cart.html">Кошик 🛒: <span id="cart-count">0</span></a>
 </div>
@@ -169,7 +234,7 @@ button{
 <!-- Ложка -->
 <div class="step">
 <h2>3. Ложка</h2>
-<img src="images/spoon.webp" alt="Ложка" class="product-img">
+<img src="images/spoon.webp" class="product-img">
 <p class="price">Ціна: 50 грн</p>
 <button onclick="addItem('spoon')">Додати</button>
 <button onclick="removeItem('spoon')">Скасувати</button>
@@ -214,10 +279,22 @@ button{
 <div class="step">
 <h2>Додатково</h2>
 <div class="options">
-<div class="option" id="candies" onclick="toggleExtra(this,100,'Цукерки')">Цукерки Kinder <br><span class="price">100 грн</span></div>
-<div class="option" id="card" onclick="toggleExtra(this,40,'Листівка')">Листівка <br><span class="price">40 грн</span></div>
-<div class="option" id="flowers" onclick="toggleExtra(this,120,'Букетик сухоцвітів')">Букетик сухоцвітів <br><span class="price">120 грн</span></div>
-<div class="option active" id="box-option">Коробка <br><span class="price">60 грн</span></div>
+  <div class="option" id="candies" onclick="toggleExtra(this,100,'Цукерки')">
+    <img src="images/candies.webp">
+    Цукерки Kinder <br><span class="price">100 грн</span>
+  </div>
+  <div class="option" id="card" onclick="toggleExtra(this,40,'Листівка')">
+    <img src="images/card.png">
+    Листівка <br><span class="price">40 грн</span>
+  </div>
+  <div class="option" id="flowers" onclick="toggleExtra(this,120,'Букетик сухоцвітів')">
+    <img src="images/flowers.png">
+    Букетик сухоцвітів <br><span class="price">120 грн</span>
+  </div>
+  <div class="option active" id="box-option">
+    <img src="images/box.avif">
+    Коробка <br><span class="price">60 грн</span>
+  </div>
 </div>
 </div>
 
@@ -234,19 +311,23 @@ button{
 </div>
 
 <script>
+// --- МЕНЮ ---
+function toggleMenu(){
+  const menu = document.getElementById('side-menu');
+  menu.style.left = (menu.style.left === '0px') ? '-250px' : '0px';
+}
+
+// ==== ЛОГІКА КОНСТРУКТОРА ====
 const data = {
   cup: { index:0, images:["images/cup1.png","images/cup2.webp","images/cup3.webp","images/cup4.webp","images/cup5.webp","images/cup6.webp","images/cup7.webp","images/cup8.webp","images/cup9.webp","images/cup10.webp","images/cup11.webp","images/cup12.webp","images/cup13.webp","images/cup14.webp","images/cup15.webp","images/cup16.webp"], prices:[100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250]},
   tea: { index:0, images:["images/tea1.png","images/tea2.png","images/tea3.png","images/tea4.png","images/tea5.png","images/tea6.png"], prices:[90,95,100,105,110,120]},
   cream: { index:0, images:["images/cream1.png","images/cream2.png","images/cream3.png"], prices:[70,80,90]}
 };
-
-// порядок элементов
 const order = ['cup','candle','spoon','socks','tea','cream','Цукерки','Листівка','Букетик сухоцвітів','Коробка'];
-
 let selected = {cup:0,tea:0,cream:0,candle:0,spoon:0,socks:0,extras:[60]};
 
-// отображаем коробку сразу
-addSelectedDisplay('Коробка','images/box.png');
+// Коробка отображается сразу
+addSelectedDisplay('Коробка','images/box.avif');
 document.getElementById('box-option').classList.add('active');
 document.getElementById('box-option').style.pointerEvents='none';
 calculateTotal();
@@ -255,22 +336,13 @@ function update(type){
   document.getElementById(type+'-img').src = data[type].images[data[type].index];
   document.getElementById(type+'-price').innerText = data[type].prices[data[type].index];
 }
-function next(type){
-  data[type].index=(data[type].index+1)%data[type].images.length;
-  update(type);
-}
-function prev(type){
-  data[type].index=(data[type].index-1+data[type].images.length)%data[type].images.length;
-  update(type);
-}
+function next(type){ data[type].index=(data[type].index+1)%data[type].images.length; update(type); }
+function prev(type){ data[type].index=(data[type].index+data[type].images.length-1)%data[type].images.length; update(type); }
 
-// добавление элементов
 function addItem(type){
   let imgSrc;
-  if(type in data){
-    selected[type] = data[type].prices[data[type].index];
-    imgSrc = document.getElementById(type+'-img').src;
-  } else {
+  if(type in data){ selected[type]=data[type].prices[data[type].index]; imgSrc=document.getElementById(type+'-img').src; }
+  else {
     if(type=='candle'){ selected[type]=80; imgSrc='images/candle.jpg'; }
     if(type=='spoon'){ selected[type]=50; imgSrc='images/spoon.webp'; }
     if(type=='socks'){ selected[type]=120; imgSrc='images/socks.png'; }
@@ -279,53 +351,43 @@ function addItem(type){
   calculateTotal();
 }
 
-function removeItem(type){
-  selected[type]=0;
-  removeSelectedDisplay(type);
-  calculateTotal();
-}
+function removeItem(type){ selected[type]=0; removeSelectedDisplay(type); calculateTotal(); }
 
-// горизонтальный список выбранных элементов
 function addSelectedDisplay(name,imgSrc){
   removeSelectedDisplay(name);
-  const container = document.getElementById('selected-items');
-  // ищем правильную позицию по order
-  let insertBefore = null;
+  const container=document.getElementById('selected-items');
+  let insertBefore=null;
   for(let el of container.children){
-    if(order.indexOf(name) < order.indexOf(el.id.replace('selected-',''))){
-      insertBefore = el;
-      break;
-    }
+    if(order.indexOf(name)<order.indexOf(el.id.replace('selected-',''))){ insertBefore=el; break; }
   }
-  const div = document.createElement('div');
+  const div=document.createElement('div');
   div.className='selected-item';
-  if(name=='spoon') div.classList.add('spoon'); // уменьшенная ложка
+  if(name=='spoon') div.classList.add('spoon');
   div.id='selected-'+name;
   div.innerHTML='<img src="'+imgSrc+'"><span>'+name+'</span>';
-  if(insertBefore) container.insertBefore(div,insertBefore);
-  else container.appendChild(div);
+  if(insertBefore) container.insertBefore(div,insertBefore); else container.appendChild(div);
 }
 
-function removeSelectedDisplay(name){
-  const el=document.getElementById('selected-'+name);
-  if(el) el.remove();
-}
+function removeSelectedDisplay(name){ const el=document.getElementById('selected-'+name); if(el) el.remove(); }
 
-// доп. элементы
 function toggleExtra(el,price,name){
   if(el.classList.contains('active')){
     el.classList.remove('active');
-    selected.extras = selected.extras.filter(p=>p!==price);
+    selected.extras=selected.extras.filter(p=>p!==price);
     removeSelectedDisplay(name);
   } else {
     el.classList.add('active');
     selected.extras.push(price);
-    addSelectedDisplay(name,'images/default.png'); // можно заменить на реальное фото
+    let iconImg = 'images/default.png';
+    if(name==='Цукерки') iconImg='images/candies.webp';
+    if(name==='Листівка') iconImg='images/card.png';
+    if(name==='Букетик сухоцвітів') iconImg='images/flowers.png';
+    if(name==='Коробка') iconImg='images/box.avif';
+    addSelectedDisplay(name,iconImg);
   }
   calculateTotal();
 }
 
-// сумма
 function calculateTotal(){
   let total=0;
   for(let key in selected){
@@ -335,126 +397,38 @@ function calculateTotal(){
   document.getElementById('total').innerText = total + " грн";
 }
 
-// корзина
 function updateCartCount(){
   let cartCount=0;
   if(localStorage.getItem('cartItems')){
-    let savedItems = JSON.parse(localStorage.getItem('cartItems'));
-    cartCount = savedItems.reduce((sum,item)=>sum+item.qty,0);
+    let savedItems=JSON.parse(localStorage.getItem('cartItems'));
+    cartCount=savedItems.reduce((sum,item)=>sum+item.qty,0);
   }
-  document.getElementById('cart-count').innerText = cartCount;
+  document.getElementById('cart-count').innerText=cartCount;
 }
 updateCartCount();
 
 function buyBox(){
-  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-  let boxItems = [];
-
-  // основные товары
-  if(selected.cup){
-    boxItems.push({
-      name:"Чашка",
-      price:selected.cup,
-      img:document.getElementById('cup-img').src
-    });
-  }
-
-  if(selected.candle){
-    boxItems.push({
-      name:"Свічка",
-      price:80,
-      img:"images/candle.jpg"
-    });
-  }
-
-  if(selected.spoon){
-    boxItems.push({
-      name:"Ложка",
-      price:50,
-      img:"images/spoon.webp"
-    });
-  }
-
-  if(selected.socks){
-    boxItems.push({
-      name:"Шкарпетки",
-      price:120,
-      img:"images/socks.png"
-    });
-  }
-
-  if(selected.tea){
-    boxItems.push({
-      name:"Чай",
-      price:selected.tea,
-      img:document.getElementById('tea-img').src
-    });
-  }
-
-  if(selected.cream){
-    boxItems.push({
-      name:"Крем",
-      price:selected.cream,
-      img:document.getElementById('cream-img').src
-    });
-  }
-
-  // доп. элементы
-  if(selected.extras.includes(60)){
-    boxItems.push({
-      name:"Коробка",
-      price:60,
-      img:"images/box.png"
-    });
-  }
-
-  if(selected.extras.includes(100)){
-    boxItems.push({
-      name:"Цукерки",
-      price:100,
-      img:"images/default.png"
-    });
-  }
-
-  if(selected.extras.includes(40)){
-    boxItems.push({
-      name:"Листівка",
-      price:40,
-      img:"images/default.png"
-    });
-  }
-
-  if(selected.extras.includes(120)){
-    boxItems.push({
-      name:"Букетик сухоцвітів",
-      price:120,
-      img:"images/default.png"
-    });
-  }
-
-  // итоговая сумма (числом)
-  let total = 0;
-  boxItems.forEach(item => total += item.price);
-
-  cartItems.push({
-    name:"Конструктор боксу",
-    img:"images/box.png",
-    qty:1,
-    price:total,
-    items: boxItems   // 🔥 ВАЖНО
-  });
-
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  let cartItems=JSON.parse(localStorage.getItem('cartItems'))||[];
+  let boxItems=[];
+  if(selected.cup){boxItems.push({name:"Чашка",price:selected.cup,img:document.getElementById('cup-img').src});}
+  if(selected.candle){boxItems.push({name:"Свічка",price:80,img:"images/candle.jpg"});}
+  if(selected.spoon){boxItems.push({name:"Ложка",price:50,img:"images/spoon.webp"});}
+  if(selected.socks){boxItems.push({name:"Шкарпетки",price:120,img:"images/socks.png"});}
+  if(selected.tea){boxItems.push({name:"Чай",price:selected.tea,img:document.getElementById('tea-img').src});}
+  if(selected.cream){boxItems.push({name:"Крем",price:selected.cream,img:document.getElementById('cream-img').src});}
+  if(selected.extras.includes(60)){boxItems.push({name:"Коробка",price:60,img:"images/box.avif"});}
+  if(selected.extras.includes(100)){boxItems.push({name:"Цукерки",price:100,img:"images/candies.webp"});}
+  if(selected.extras.includes(40)){boxItems.push({name:"Листівка",price:40,img:"images/card.png"});}
+  if(selected.extras.includes(120)){boxItems.push({name:"Букетик сухоцвітів",price:120,img:"images/flowers.png"});}
+  let total=0; boxItems.forEach(item=>total+=item.price);
+  cartItems.push({name:"Конструктор боксу",img:"images/box.avif",qty:1,price:total,items:boxItems});
+  localStorage.setItem('cartItems',JSON.stringify(cartItems));
   updateCartCount();
-
   alert("Бокс додано у кошик!");
 }
 
-update('cup');
-update('tea');
-update('cream');
-
+update('cup'); update('tea'); update('cream');
 </script>
+
 </body>
 </html>
