@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Кошик</title>
 
 <style>
@@ -45,6 +45,11 @@ h1 { color: #ff4d6d; margin-top:50px; }
   font-weight: bold;
 }
 #side-menu a:hover { background:#ffe6f0; }
+
+/* 🔥 СКРИВАЄМО КОНСТРУКТОР */
+#side-menu a[href="constructor.html"] {
+  display: none;
+}
 
 /* Кошик */
 .cart-item { 
@@ -102,8 +107,8 @@ h1 { color: #ff4d6d; margin-top:50px; }
   cursor:pointer;
 }
 .cart-controls button.qty {
-  background: transparent; /* фон прозорий */
-  color: black;            /* значки чорні */
+  background: transparent;
+  color: black;
   border: none;
   font-size:18px;
   cursor:pointer;
@@ -163,16 +168,16 @@ button#order {
 <!-- ФОРМА -->
 <div id="order-form">
   <h2>Введіть ваші дані</h2>
-  <input type="text" id="firstName" placeholder="Ім'я">
-  <input type="text" id="lastName" placeholder="Прізвище">
-  <input type="tel" id="phone" value="+380" oninput="phoneMask(this)">
+  <input type="text" id="firstName" placeholder="Ім'я" />
+  <input type="text" id="lastName" placeholder="Прізвище" />
+  <input type="tel" id="phone" value="+380" oninput="phoneMask(this)" />
   <select id="deliveryService">
     <option value="">Оберіть доставку</option>
     <option value="nova_poshta">Нова Пошта</option>
     <option value="ukr_poshta">УкрПошта</option>
   </select>
-  <input type="text" id="city" placeholder="Місто">
-  <input type="text" id="branch" placeholder="Відділення">
+  <input type="text" id="city" placeholder="Місто" />
+  <input type="text" id="branch" placeholder="Відділення" />
   <button onclick="submitOrder()">Підтвердити</button>
 </div>
 
@@ -221,26 +226,25 @@ ${subItem.name === 'Коробка' ? '' : `<button onclick="removeSubItem(${ind
 
     container.innerHTML += `
 <div class="cart-item">
-<div class="cart-header">
-<img src="${item.img}">
-<div><b>${item.name}</b><br>Сума: ${itemTotal} грн</div>
-</div>
+  <div class="cart-header">
+    <img src="${item.img}">
+    <div><b>${item.name}</b><br>Сума: ${itemTotal} грн</div>
+  </div>
 
-${item.items ? `<div class="box-items">${itemsHTML}</div>` : ''}
+  ${item.items ? `<div class="box-items">${itemsHTML}</div>` : ''}
 
-<div class="cart-controls">
-  ${!item.items ? `<button class="qty" onclick="changeQty(${index}, -1)">-</button>
-  <span id="qty-${index}">${item.qty || 1}</span>
-  <button class="qty" onclick="changeQty(${index}, 1)">+</button>` : ''}
-  <button class="remove" onclick="removeItem(${index})">❌ Видалити</button>
-</div>
+  <div class="cart-controls">
+    ${!item.items ? `<button class="qty" onclick="changeQty(${index}, -1)">-</button>
+    <span id="qty-${index}">${item.qty || 1}</span>
+    <button class="qty" onclick="changeQty(${index}, 1)">+</button>` : ''}
+    <button class="remove" onclick="removeItem(${index})">❌ Видалити</button>
+  </div>
 </div>`;
   });
 
   document.getElementById('total-price').innerText = "Загальна сума: " + totalSum + " грн";
 }
 
-// Зміна кількості звичайних товарів
 function changeQty(index, delta){
   if(!cartItems[index].qty) cartItems[index].qty = 1;
   cartItems[index].qty += delta;
@@ -249,7 +253,6 @@ function changeQty(index, delta){
   displayCart();
 }
 
-// Видалення елемента боксу
 function removeSubItem(cartIndex, subIndex){
   cartItems[cartIndex].items.splice(subIndex,1);
   let newPrice = 0;
@@ -259,14 +262,12 @@ function removeSubItem(cartIndex, subIndex){
   displayCart();
 }
 
-// Видалення товару
 function removeItem(index){
   cartItems.splice(index,1);
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
   displayCart();
 }
 
-// Форма замовлення
 function orderCart(){
   if(cartItems.length === 0){
     alert("Кошик порожній!");
@@ -275,23 +276,24 @@ function orderCart(){
   document.getElementById('order-form').style.display='block';
 }
 
-// Маска телефона
 function phoneMask(input){
+  // Обробка номера так, щоб лиш 9 цифр після +380
   if(!input.value.startsWith('+380')) input.value = '+380';
-  let numbers = input.value.slice(4).replace(/\D/g,'');
-  input.value = '+380' + numbers;
+  let digits = input.value.slice(4).replace(/\D/g, '').slice(0,9);
+  input.value = '+380' + digits;
 }
 
-// Відправка замовлення
 function submitOrder(){
-  const firstName = document.getElementById('firstName').value;
-  const lastName = document.getElementById('lastName').value;
-  const phone = document.getElementById('phone').value;
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const phone = document.getElementById('phone').value.trim();
   const deliveryService = document.getElementById('deliveryService').value;
-  const city = document.getElementById('city').value;
-  const branch = document.getElementById('branch').value;
-  if(!firstName || !lastName || !phone || !deliveryService || !city || !branch){
-    alert("Заповніть всі поля"); return;
+  const city = document.getElementById('city').value.trim();
+  const branch = document.getElementById('branch').value.trim();
+
+  if(!firstName || !lastName || !phone || phone.length !== 13 || !deliveryService || !city || !branch){
+    alert("Заповніть всі поля коректно (номер телефону +380*********)");
+    return;
   }
 
   let itemsText = cartItems.map(item=>{
@@ -309,10 +311,13 @@ function submitOrder(){
     body: JSON.stringify(body)
   });
 
-  alert("Замовлення відправлено!");
+  alert(`Замовлення відправлено!\n\nІм'я: ${firstName}\nПрізвище: ${lastName}\nТелефон: ${phone}\nДоставка: ${deliveryService}\nМісто: ${city}\nВідділення: ${branch}\n\nТовари:\n${itemsText}`);
+
   cartItems = [];
   localStorage.removeItem('cartItems');
   displayCart();
+
+  document.getElementById('order-form').style.display = 'none';
 }
 
 displayCart();
