@@ -22,9 +22,8 @@ h1 { color: #ff4d6d; margin-top:50px; }
   z-index: 1000;
   cursor: pointer;
 }
-#menu-button span {
-  font-weight: bold;
-}
+#menu-button span { font-weight: bold; }
+
 #side-menu {
   position: fixed;
   top: 0;
@@ -45,11 +44,7 @@ h1 { color: #ff4d6d; margin-top:50px; }
   font-weight: bold;
 }
 #side-menu a:hover { background:#ffe6f0; }
-
-/* 🔥 СКРИВАЄМО КОНСТРУКТОР */
-#side-menu a[href="constructor.html"] {
-  display: none;
-}
+#side-menu a[href="constructor.html"] { display: none; }
 
 /* Кошик */
 .cart-item { 
@@ -277,7 +272,7 @@ function orderCart(){
 }
 
 function phoneMask(input){
-  // Обробка номера так, щоб лиш 9 цифр після +380
+  // Лише 9 цифр після +380
   if(!input.value.startsWith('+380')) input.value = '+380';
   let digits = input.value.slice(4).replace(/\D/g, '').slice(0,9);
   input.value = '+380' + digits;
@@ -296,11 +291,14 @@ function submitOrder(){
     return;
   }
 
+  // Тепер учитываем количество
   let itemsText = cartItems.map(item=>{
     if(item.items){
       let sub = item.items.map(i=>`${i.name} (${i.price} грн)`).join(', ');
       return `${item.name}: ${sub}`;
-    } else return `${item.name} (${item.price} грн)`;
+    } else {
+      return `${item.name} x${item.qty} (${item.price} грн)`;
+    }
   }).join('\n');
 
   const body = { firstName, lastName, phone, deliveryService, city, branch, items: itemsText };
