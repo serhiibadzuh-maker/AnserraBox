@@ -146,6 +146,7 @@ header{
 .product img{
   width:200px;
   border-radius:10px;
+  object-fit:contain;
 }
 .product-info{
   flex:1;
@@ -166,7 +167,7 @@ header{
   color:black;
   margin-bottom:10px;
 }
-/* Кнопка купити - стара */
+/* Кнопка купити */
 .product-info button{
   padding:10px 20px;
   background:#ff4d6d;
@@ -188,8 +189,16 @@ header{
   .text p{font-size:16px;}
   #sort-dropdown{margin:10px 20px;}
   .hero img{width:84%; max-width:360px;}
-  .product{flex-direction:column; text-align:center;}
-  .product img{width:70%;}
+  .product{
+    flex-direction:column;
+    text-align:center;
+  }
+  .product img{
+    width:80%;
+    max-width:300px;
+    margin:0 auto; /* Центруем изображение */
+    display:block;
+  }
   .product-info{width:100%;}
 }
 /* Анимация */
@@ -238,8 +247,9 @@ header{
 </div>
 
 <div id="products-container">
+<!-- Товари генеруються скриптом -->
+</div>
 
-<!-- 16 товарів -->
 <script>
 const productsData = [
   {name:"Бокс №1", img:"images_index/bokc1.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
@@ -277,11 +287,11 @@ productsData.forEach(p=>{
   container.appendChild(div);
 });
 
-// Скрипты
 function toggleMenu(){
   const menu = document.getElementById('side-menu');
   menu.style.left = (menu.style.left==='0px') ? '-250px' : '0px';
 }
+
 function updateCartCount(){
   let cartCount = 0;
   if(localStorage.getItem('cartItems')){
@@ -290,6 +300,7 @@ function updateCartCount(){
   }
   document.getElementById('cart-count').innerText = cartCount;
 }
+
 function addToCart(name,img,price,btn){
   let cart = localStorage.getItem('cartItems')?JSON.parse(localStorage.getItem('cartItems')):[];
   let found = cart.find(x=>x.name===name);
@@ -307,15 +318,18 @@ function addToCart(name,img,price,btn){
   setTimeout(()=>{flying.style.left=cartRect.left+'px'; flying.style.top=cartRect.top+'px'; flying.style.width='30px'; flying.style.height='30px'; flying.style.opacity='0.5';},10);
   setTimeout(()=>document.body.removeChild(flying),900);
 }
+
 function toggleSort(){
   const content = document.getElementById('sort-dropdown-content');
   content.style.display = content.style.display==='block'?'none':'block';
 }
+
 function sortProducts(order){
   const products = Array.from(document.getElementById('products-container').children);
   products.sort((a,b)=> order==='asc'?a.dataset.price-b.dataset.price:b.dataset.price-a.dataset.price);
   products.forEach(p=>document.getElementById('products-container').appendChild(p));
 }
+
 updateCartCount();
 </script>
 
