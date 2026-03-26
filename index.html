@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brim Dream Box</title>
 <style>
+/* --- весь твой CSS без изменений --- */
 body{
   margin:0;
   font-family:Arial, sans-serif;
   background:#f6f6f6;
 }
-/* Бургер кнопка */
 #menu-button {
   position: fixed;
   top: 20px;
@@ -23,7 +23,6 @@ body{
   z-index: 1100;
   cursor: pointer;
 }
-/* Шторка */
 #side-menu {
   position: fixed;
   top: 0;
@@ -46,7 +45,6 @@ body{
 }
 #side-menu a:hover { background: #ffe6f0; }
 #side-menu a[href="constructor.html"] { display:none; }
-/* Кошик */
 #cart-button {
   position: fixed;
   top: 20px;
@@ -63,7 +61,6 @@ body{
   color: white;
   font-weight: bold;
 }
-/* HEADER */
 header{
   background:white;
   padding:60px;
@@ -93,7 +90,6 @@ header{
   width:400px;
   border-radius:15px;
 }
-/* Сортування */
 #sort-dropdown{
   display:flex;
   justify-content:flex-end;
@@ -132,7 +128,6 @@ header{
 #sort-dropdown-content button:hover{
   background:#ffe6f0;
 }
-/* Товари */
 .product {
   display:flex;
   align-items:flex-start;
@@ -143,13 +138,12 @@ header{
   border-radius:15px;
   box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
-/* Карусель */
 .carousel {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
   flex-shrink: 0;
-  width: 200px; /* для десктопа */
+  width: 200px;
   height: 200px;
 }
 .carousel-track {
@@ -193,22 +187,20 @@ header{
 .dot.active {
   background: #ff4d6d;
 }
-
-/* Мобильная версия */
 @media (max-width:768px){
   .product{
     flex-direction:column;
     text-align:center;
   }
   .carousel {
-    width: 200px;       /* фиксированная ширина */
-    max-width: 90%;     /* не превышать 90% экрана */
-    height: auto;       /* высота под размер картинки */
+    width: 80%;
+    max-width: 90%;
+    height: auto;
     margin: 0 auto;
   }
   .carousel img {
     width: 100%;
-    height: auto;       /* сохраняем пропорции */
+    height: auto;
   }
   .prev, .next {
     padding: 4px 8px;
@@ -234,7 +226,6 @@ header{
   color:black;
   margin-bottom:10px;
 }
-/* Кнопка купити */
 .product-info button{
   padding:10px 20px;
   background:#ff4d6d;
@@ -248,7 +239,6 @@ header{
   text-align:center;
   align-self:flex-start;
 }
-/* Мобільная версия */
 @media (max-width:768px){
   header{padding:60px 20px 40px 20px;}
   .header-content{flex-direction:column; align-items:center; text-align:center; gap:20px;}
@@ -264,7 +254,6 @@ header{
   .carousel img { width: 100%; }
   .product-info{width:100%;}
 }
-/* Анимация */
 .flying-img{
   position:fixed;
   width:50px;
@@ -334,64 +323,73 @@ const productsData = [
 ];
 
 const container = document.getElementById('products-container');
-productsData.forEach(p=>{
+
+// --- Генерация товаров и каруселей ---
+productsData.forEach(p => {
   const div = document.createElement('div');
   div.className = 'product';
   div.dataset.price = p.price;
-  
-  // Карусель
+
+  // HTML карусели
   let carouselHTML = `<div class="carousel"><div class="carousel-track">`;
-  p.imgs.forEach(src=>{ carouselHTML += `<img src="${src}" alt="${p.name}">`; });
+  p.imgs.forEach(src => { carouselHTML += `<img src="${src}" alt="${p.name}">`; });
   carouselHTML += `</div><button class="prev">‹</button><button class="next">›</button><div class="dots">`;
-  p.imgs.forEach((_,i)=>{ carouselHTML += `<span class="dot ${i===0?'active':''}"></span>`; });
+  p.imgs.forEach((_,i) => { carouselHTML += `<span class="dot ${i===0?'active':''}"></span>`; });
   carouselHTML += `</div></div>`;
-  
-  div.innerHTML = `${carouselHTML}<div class="product-info"><h2>${p.name}</h2><p>${p.desc}</p><div class="price">Ціна: ${p.price} грн</div><button onclick="addToCart('${p.name}','${p.imgs[0]}',${p.price},this)">Купити</button></div>`;
+
+  div.innerHTML = `${carouselHTML}
+    <div class="product-info">
+      <h2>${p.name}</h2>
+      <p>${p.desc}</p>
+      <div class="price">Ціна: ${p.price} грн</div>
+      <button onclick="addToCart('${p.name}','${p.imgs[0]}',${p.price},this)">Купити</button>
+    </div>`;
+
   container.appendChild(div);
 
-  // Скрипт каруселі
-  const track = div.querySelector('.carousel-track');
-  const dots = div.querySelectorAll('.dot');
-  const imgs = track.querySelectorAll('img');
-  const prevBtn = div.querySelector('.prev');
-  const nextBtn = div.querySelector('.next');
-  let current = 0;
- function updateCarousel() {
-    const carouselWidth = track.parentElement.clientWidth;
-    const imgWidth = imgs[0].clientWidth;
-    track.style.transform = `translateX(-${current * imgWidth}px)`;
-    dots.forEach((d,i)=>d.classList.toggle('active',i===current));
-}
-  nextBtn.onclick = ()=>{ current = (current+1)%imgs.length; updateCarousel(); };
-  prevBtn.onclick = ()=>{ current = (current-1+imgs.length)%imgs.length; updateCarousel(); };
-  dots.forEach((dot,i)=>{ dot.onclick=()=>{ current=i; updateCarousel(); } });
-  window.addEventListener('resize', updateCarousel);
-  updateCarousel();
-  // ------------------ Свайп на мобильных ------------------
-let startX = 0;
-let isDragging = false;
+  // --- Инициализация карусели ---
+  (function initCarousel(div){
+    const track = div.querySelector('.carousel-track');
+    const dots = div.querySelectorAll('.dot');
+    const imgs = track.querySelectorAll('img');
+    const prevBtn = div.querySelector('.prev');
+    const nextBtn = div.querySelector('.next');
+    let current = 0;
 
-track.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-  isDragging = true;
+    function updateCarousel() {
+      const imgWidth = imgs[0].clientWidth;
+      track.style.transform = `translateX(-${current * imgWidth}px)`;
+      dots.forEach((d,i)=>d.classList.toggle('active', i===current));
+    }
+
+    nextBtn.onclick = ()=>{ current = (current+1)%imgs.length; updateCarousel(); };
+    prevBtn.onclick = ()=>{ current = (current-1+imgs.length)%imgs.length; updateCarousel(); };
+    dots.forEach((dot,i)=>{ dot.onclick=()=>{ current=i; updateCarousel(); } });
+    window.addEventListener('resize', updateCarousel);
+    updateCarousel();
+
+    // Свайп для мобільних
+    let startX = 0, isDragging = false;
+    track.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; isDragging=true; });
+    track.addEventListener('touchmove', e=>{
+      if(!isDragging) return;
+      const x = e.touches[0].clientX;
+      const diff = startX - x;
+      if(Math.abs(diff) > 50){
+        current = diff>0 ? (current+1)%imgs.length : (current-1+imgs.length)%imgs.length;
+        updateCarousel();
+        startX = x;
+      }
+    });
+    track.addEventListener('touchend', e=>{ isDragging=false; });
+
+  })(div);
 });
 
-track.addEventListener('touchmove', e => {
-  if(!isDragging) return;
-  const x = e.touches[0].clientX;
-  const diff = startX - x;
-  if(diff > 50) { current = (current+1) % imgs.length; updateCarousel(); isDragging=false; }
-  else if(diff < -50) { current = (current-1+imgs.length) % imgs.length; updateCarousel(); isDragging=false; }
-});
-
-track.addEventListener('touchend', e => {
-  isDragging = false;
-});
-});
-
-function toggleMenu(){
-  const menu = document.getElementById('side-menu');
-  menu.style.left = (menu.style.left==='0px') ? '-250px' : '0px';
+// --- Меню, корзина, сортировка ---
+function toggleMenu(){ 
+  const menu = document.getElementById('side-menu'); 
+  menu.style.left = (menu.style.left==='0px') ? '-250px' : '0px'; 
 }
 
 function updateCartCount(){
@@ -406,24 +404,33 @@ function updateCartCount(){
 function addToCart(name,img,price,btn){
   let cart = localStorage.getItem('cartItems')?JSON.parse(localStorage.getItem('cartItems')):[];
   let found = cart.find(x=>x.name===name);
-  if(found) found.qty++; else cart.push({name,img,price,qty:1});
+  if(found) found.qty++;
+  else cart.push({name,img,price,qty:1});
   localStorage.setItem('cartItems',JSON.stringify(cart));
   updateCartCount();
+
+  // Анимация "летящей" картинки
   const imgEl = btn.closest('.product').querySelector('.carousel img');
   const flying = imgEl.cloneNode(true);
   flying.classList.add('flying-img');
   document.body.appendChild(flying);
   const rect = imgEl.getBoundingClientRect();
-  flying.style.left = rect.left + 'px';
-  flying.style.top = rect.top + 'px';
+  flying.style.left = rect.left+'px';
+  flying.style.top = rect.top+'px';
   const cartRect = document.getElementById('cart-button').getBoundingClientRect();
-  setTimeout(()=>{flying.style.left=cartRect.left+'px'; flying.style.top=cartRect.top+'px'; flying.style.width='30px'; flying.style.height='30px'; flying.style.opacity='0.5';},10);
+  setTimeout(()=>{ 
+    flying.style.left = cartRect.left+'px';
+    flying.style.top = cartRect.top+'px';
+    flying.style.width='30px';
+    flying.style.height='30px';
+    flying.style.opacity='0.5';
+  },10);
   setTimeout(()=>document.body.removeChild(flying),900);
 }
 
 function toggleSort(){
   const content = document.getElementById('sort-dropdown-content');
-  content.style.display = content.style.display==='block'?'none':'block';
+  content.style.display = (content.style.display==='block')?'none':'block';
 }
 
 function sortProducts(order){
