@@ -143,10 +143,77 @@ header{
   border-radius:15px;
   box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
-.product img{
-  width:200px;
-  border-radius:10px;
-  object-fit:contain;
+/* Карусель */
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  flex-shrink: 0;
+  width: 200px; /* для десктопа */
+  height: 200px;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+.carousel img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 18px;
+  line-height: 1;
+  z-index: 5;
+}
+.prev { left: 5px; }
+.next { right: 5px; }
+.dots {
+  text-align: center;
+  margin-top: 5px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 3px;
+  cursor: pointer;
+}
+.dot.active {
+  background: #ff4d6d;
+}
+
+/* Мобильная версия */
+@media (max-width:768px){
+  .product{
+    flex-direction:column;
+    text-align:center;
+  }
+  .carousel {
+    width: 200px;       /* фиксированная ширина */
+    max-width: 90%;     /* не превышать 90% экрана */
+    height: auto;       /* высота под размер картинки */
+    margin: 0 auto;
+  }
+  .carousel img {
+    width: 100%;
+    height: auto;       /* сохраняем пропорции */
+  }
+  .prev, .next {
+    padding: 4px 8px;
+    font-size: 16px;
+  }
 }
 .product-info{
   flex:1;
@@ -193,12 +260,8 @@ header{
     flex-direction:column;
     text-align:center;
   }
-  .product img{
-    width:80%;
-    max-width:300px;
-    margin:0 auto; /* Центруем изображение */
-    display:block;
-  }
+  .carousel { width: 80%; margin: 0 auto; }
+  .carousel img { width: 100%; }
   .product-info{width:100%;}
 }
 /* Анимация */
@@ -252,22 +315,22 @@ header{
 
 <script>
 const productsData = [
-  {name:"Бокс №1", img:"images_index/bokc1.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №2", img:"images_index/bokc2.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №3", img:"images_index/bokc3.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №4", img:"images_index/bokc4.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №5", img:"images_index/bokc5.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №6", img:"images_index/bokc6.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №7", img:"images_index/bokc7.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №8", img:"images_index/bokc8.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №9", img:"images_index/bokc9.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №10", img:"images_index/bokc10.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №11", img:"images_index/bokc11.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №12", img:"images_index/bokc12.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №13", img:"images_index/bokc13.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №14", img:"images_index/bokc14.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
-  {name:"Бокс №15", img:"images_index/bokc15.png.jpg", price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №16", img:"images_index/bokc16.png.webp", price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"}
+  {name:"Бокс №1", imgs:["images_index/bokc1.png.jpg","images_index/bokc1_2.jpg","images_index/bokc1_3.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №2", imgs:["images_index/bokc2.png.webp","images_index/bokc2_2.webp","images_index/bokc2_3.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №3", imgs:["images_index/bokc3.png.jpg","images_index/bokc3.png.jpg","images_index/bokc3.png.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №4", imgs:["images_index/bokc4.webp","images_index/bokc4.webp","images_index/bokc4.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №5", imgs:["images_index/bokc5.jpg","images_index/bokc5.jpg","images_index/bokc5.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №6", imgs:["images_index/bokc6.webp","images_index/bokc6.webp","images_index/bokc6.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №7", imgs:["images_index/bokc7.jpg","images_index/bokc7.jpg","images_index/bokc7.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №8", imgs:["images_index/bokc8.webp","images_index/bokc8.webp","images_index/bokc8.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №9", imgs:["images_index/bokc9.jpg","images_index/bokc9.jpg","images_index/bokc9.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №10", imgs:["images_index/bokc10.webp","images_index/bokc10.webp","images_index/bokc10.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №11", imgs:["images_index/bokc11.jpg","images_index/bokc11.jpg","images_index/bokc11.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №12", imgs:["images_index/bokc12.webp","images_index/bokc12.webp","images_index/bokc12.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №13", imgs:["images_index/bokc13.jpg","images_index/bokc13.jpg","images_index/bokc13.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №14", imgs:["images_index/bokc14.webp","images_index/bokc14.webp","images_index/bokc14.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"},
+  {name:"Бокс №15", imgs:["images_index/bokc15.jpg","images_index/bokc15.jpg","images_index/bokc15.jpg"], price:600, desc:"Чашка, ложечка, чай, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №16", imgs:["images_index/bokc16.webp","images_index/bokc16.webp","images_index/bokc16.webp"], price:650, desc:"Чашка, блокнот, ручка, свічка, шоколад, маленький букетик, листівка"}
 ];
 
 const container = document.getElementById('products-container');
@@ -275,16 +338,35 @@ productsData.forEach(p=>{
   const div = document.createElement('div');
   div.className = 'product';
   div.dataset.price = p.price;
-  div.innerHTML = `
-    <img src="${p.img}" alt="${p.name}">
-    <div class="product-info">
-      <h2>${p.name}</h2>
-      <p>${p.desc}</p>
-      <div class="price">Ціна: ${p.price} грн</div>
-      <button onclick="addToCart('${p.name}','${p.img}',${p.price},this)">Купити</button>
-    </div>
-  `;
+  
+  // Карусель
+  let carouselHTML = `<div class="carousel"><div class="carousel-track">`;
+  p.imgs.forEach(src=>{ carouselHTML += `<img src="${src}" alt="${p.name}">`; });
+  carouselHTML += `</div><button class="prev">‹</button><button class="next">›</button><div class="dots">`;
+  p.imgs.forEach((_,i)=>{ carouselHTML += `<span class="dot ${i===0?'active':''}"></span>`; });
+  carouselHTML += `</div></div>`;
+  
+  div.innerHTML = `${carouselHTML}<div class="product-info"><h2>${p.name}</h2><p>${p.desc}</p><div class="price">Ціна: ${p.price} грн</div><button onclick="addToCart('${p.name}','${p.imgs[0]}',${p.price},this)">Купити</button></div>`;
   container.appendChild(div);
+
+  // Скрипт каруселі
+  const track = div.querySelector('.carousel-track');
+  const dots = div.querySelectorAll('.dot');
+  const imgs = track.querySelectorAll('img');
+  const prevBtn = div.querySelector('.prev');
+  const nextBtn = div.querySelector('.next');
+  let current = 0;
+ function updateCarousel() {
+    const carouselWidth = track.parentElement.clientWidth;
+    const imgWidth = imgs[0].clientWidth;
+    track.style.transform = `translateX(-${current * imgWidth}px)`;
+    dots.forEach((d,i)=>d.classList.toggle('active',i===current));
+}
+  nextBtn.onclick = ()=>{ current = (current+1)%imgs.length; updateCarousel(); };
+  prevBtn.onclick = ()=>{ current = (current-1+imgs.length)%imgs.length; updateCarousel(); };
+  dots.forEach((dot,i)=>{ dot.onclick=()=>{ current=i; updateCarousel(); } });
+  window.addEventListener('resize', updateCarousel);
+  updateCarousel();
 });
 
 function toggleMenu(){
@@ -307,7 +389,7 @@ function addToCart(name,img,price,btn){
   if(found) found.qty++; else cart.push({name,img,price,qty:1});
   localStorage.setItem('cartItems',JSON.stringify(cart));
   updateCartCount();
-  const imgEl = btn.closest('.product').querySelector('img');
+  const imgEl = btn.closest('.product').querySelector('.carousel img');
   const flying = imgEl.cloneNode(true);
   flying.classList.add('flying-img');
   document.body.appendChild(flying);
