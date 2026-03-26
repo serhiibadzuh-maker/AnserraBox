@@ -371,16 +371,22 @@ productsData.forEach(p => {
     // Свайп для мобільних
     let startX = 0, isDragging = false;
     track.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; isDragging=true; });
-    track.addEventListener('touchmove', e=>{
-      if(!isDragging) return;
-      const x = e.touches[0].clientX;
-      const diff = startX - x;
-      if(Math.abs(diff) > 50){
-        current = diff>0 ? (current+1)%imgs.length : (current-1+imgs.length)%imgs.length;
-        updateCarousel();
-        startX = x;
-      }
-    });
+    track.addEventListener('touchmove', e => {
+  if(!isDragging) return;
+  const x = e.touches[0].clientX;
+  const diff = startX - x;
+
+  if(Math.abs(diff) > 50){
+    // зацикливание индекса
+    if(diff > 0){ // свайп влево → следующая
+      current = (current + 1) % imgs.length;
+    } else {      // свайп вправо → предыдущая
+      current = (current - 1 + imgs.length) % imgs.length;
+    }
+    updateCarousel();
+    startX = x; // чтобы можно было свайпать дальше
+  }
+});
     track.addEventListener('touchend', e=>{ isDragging=false; });
 
   })(div);
