@@ -348,48 +348,56 @@ productsData.forEach(p => {
   container.appendChild(div);
 
   // --- Инициализация карусели ---
-  (function initCarousel(div){
-    const track = div.querySelector('.carousel-track');
-    const dots = div.querySelectorAll('.dot');
-    const imgs = track.querySelectorAll('img');
-    const prevBtn = div.querySelector('.prev');
-    const nextBtn = div.querySelector('.next');
-    let current = 0;
+ (function initCarousel(div){
+  const track = div.querySelector('.carousel-track');
+  const dots = div.querySelectorAll('.dot');
+  const imgs = track.querySelectorAll('img');
+  const prevBtn = div.querySelector('.prev');
+  const nextBtn = div.querySelector('.next');
+  const carousel = div.querySelector('.carousel'); // <-- навешиваем свайп сюда
+  let current = 0;
 
-    function updateCarousel() {
-      const imgWidth = imgs[0].clientWidth;
-      track.style.transform = `translateX(-${current * imgWidth}px)`;
-      dots.forEach((d,i)=>d.classList.toggle('active', i===current));
-    }
-
-    nextBtn.onclick = ()=>{ current = (current+1)%imgs.length; updateCarousel(); };
-    prevBtn.onclick = ()=>{ current = (current-1+imgs.length)%imgs.length; updateCarousel(); };
-    dots.forEach((dot,i)=>{ dot.onclick=()=>{ current=i; updateCarousel(); } });
-    window.addEventListener('resize', updateCarousel);
-    updateCarousel();
-
-    // Свайп для мобільних
-    let startX = 0, isDragging = false;
-    track.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; isDragging=true; });
-    track.addEventListener('touchmove', e => {
-  if(!isDragging) return;
-  const x = e.touches[0].clientX;
-  const diff = startX - x;
-
-  if(Math.abs(diff) > 50){
-    // зацикливание индекса
-    if(diff > 0){ // свайп влево → следующая
-      current = (current + 1) % imgs.length;
-    } else {      // свайп вправо → предыдущая
-      current = (current - 1 + imgs.length) % imgs.length;
-    }
-    updateCarousel();
-    startX = x; // чтобы можно было свайпать дальше
+  function updateCarousel() {
+    const imgWidth = carousel.clientWidth; // ширина карусели
+    track.style.transform = `translateX(-${current * imgWidth}px)`;
+    dots.forEach((d,i)=>d.classList.toggle('active', i===current));
   }
-});
-    track.addEventListener('touchend', e=>{ isDragging=false; });
 
-  })(div);
+  nextBtn.onclick = ()=>{ current = (current+1)%imgs.length; updateCarousel(); };
+  prevBtn.onclick = ()=>{ current = (current-1+imgs.length)%imgs.length; updateCarousel(); };
+  dots.forEach((dot,i)=>{ dot.onclick=()=>{ current=i; updateCarousel(); } });
+
+  window.addEventListener('resize', updateCarousel);
+  updateCarousel();
+
+  // Свайп
+  let startX = 0;
+  let isDragging = false;
+
+  carousel.addEventListener('touchstart', e => { 
+    startX = e.touches[0].clientX; 
+    isDragging = true; 
+  });
+
+  carousel.addEventListener('touchmove', e => {
+    if(!isDragging) return;
+    const x = e.touches[0].clientX;
+    const diff = startX - x;
+
+    if(Math.abs(diff) > 50){
+      if(diff > 0){ // свайп влево → следующая
+        current = (current + 1) % imgs.length;
+      } else {      // свайп вправо → предыдущая
+        current = (current - 1 + imgs.length) % imgs.length;
+      }
+      updateCarousel();
+      startX = x; // обновляем для следующего свайпа
+    }
+  });
+
+  carousel.addEventListener('touchend', e => { isDragging = false; });
+
+})(div);
 });
 
 // --- Меню, корзина, сортировка ---
