@@ -262,6 +262,33 @@ header{
   transition: all 0.8s ease-in-out;
   z-index:2000;
 }
+.tea-option{
+  margin:10px 0;
+  padding:10px;
+  border:1px solid #eee;
+  border-radius:10px;
+  background:#fff5f8;
+}
+
+.tea-option label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  font-weight:bold;
+  color:#ff4d6d;
+}
+
+.tea-select{
+  margin-top:8px;
+  display:none;
+}
+
+.tea-select select{
+  padding:6px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
 </style>
 </head>
 <body>
@@ -304,22 +331,22 @@ header{
 
 <script>
 const productsData = [
-  {name:"Бокс №1", imgs:["images_index/box1.jpg","images_index/box1.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №2", imgs:["images_index/box2.jpg","images_index/box2.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №3", imgs:["images_index/box3.jpg","images_index/box3.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №4", imgs:["images_index/bokc4.webp","images_index/bokc4.webp","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №5", imgs:["images_index/box5.jpg","images_index/box5.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №6", imgs:["images_index/box6.jpg","images_index/box6.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №7", imgs:["images_index/box7.jpg","images_index/box7.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №8", imgs:["images_index/box8.jpg","images_index/box8.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №9", imgs:["images_index/box9.jpg","images_index/box9.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №10", imgs:["images_index/box10.jpg","images_index/box10.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №11", imgs:["images_index/box11.jpg","images_index/box11.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №12", imgs:["images_index/box12.jpg","images_index/box12.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №13", imgs:["images_index/box13.jpg","images_index/box13.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №14", imgs:["images_index/box14.jpg","images_index/box14.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №15", imgs:["images_index/box15.jpg","images_index/box15.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
-  {name:"Бокс №16", imgs:["images_index/box16.jpg","images_index/box16.1.jpg","images_index/box.jpg"], price:650, desc:"Чашка, ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"}
+  {name:"Бокс №1", imgs:["images_index/box1.jpg","images_index/box1.1.jpg","images_index/box.jpg"], price:620, desc:"Чашка (мл 380), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №2", imgs:["images_index/box2.jpg","images_index/box2.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №3", imgs:["images_index/box3.jpg","images_index/box3.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №4", imgs:["images_index/bokc4.webp","images_index/bokc4.webp","images_index/box.jpg"], price:670, desc:"Чашка (мл 400), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №5", imgs:["images_index/box5.jpg","images_index/box5.1.jpg","images_index/box.jpg"], price:680, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №6", imgs:["images_index/box6.jpg","images_index/box6.1.jpg","images_index/box.jpg"], price:670, desc:"Чашка (мл 400), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №7", imgs:["images_index/box7.jpg","images_index/box7.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №8", imgs:["images_index/box8.jpg","images_index/box8.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №9", imgs:["images_index/box9.jpg","images_index/box9.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка (мл 300), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №10", imgs:["images_index/box10.jpg","images_index/box10.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №11", imgs:["images_index/box11.jpg","images_index/box11.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №12", imgs:["images_index/box12.jpg","images_index/box12.1.jpg","images_index/box.jpg"], price:670, desc:"Чашка (мл 500), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №13", imgs:["images_index/box13.jpg","images_index/box13.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка (мл 300), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №14", imgs:["images_index/box14.jpg","images_index/box14.1.jpg","images_index/box.jpg"], price:630, desc:"Чашка (мл 420), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №15", imgs:["images_index/box15.jpg","images_index/box15.1.jpg","images_index/box.jpg"], price:670, desc:"Чашка (мл 500), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"},
+  {name:"Бокс №16", imgs:["images_index/box16.jpg","images_index/box16.1.jpg","images_index/box.jpg"], price:600, desc:"Чашка (мл 300), ложечка, свічка, шкарпетки, крем, цукерки, букетик сухоцвітів, листівка"}
 ];
 
 const container = document.getElementById('products-container');
@@ -341,11 +368,43 @@ productsData.forEach(p => {
     <div class="product-info">
       <h2>${p.name}</h2>
       <p>${p.desc}</p>
-      <div class="price">Ціна: ${p.price} грн</div>
-      <button onclick="addToCart('${p.name}','${p.imgs[0]}',${p.price},this)">Купити</button>
+  <div class="price">Ціна: <span class="final-price">${p.price}</span> грн</div>
+
+<div class="tea-option">
+  <label>
+    <input type="checkbox" class="tea-checkbox">
+    <img src="images/tea1.png" alt="чай" style="width:24px; height:24px; margin-right:5px;">
+    Додати чай (+35 грн)
+  </label>
+
+  <div class="tea-select">
+    <select>
+      <option value="Апельсин-Гібіскус-Розмарин">Апельсин-Гібіскус-Розмарин</option>
+      <option value="Калина-Малина">Калина-Малина</option>
+      <option value="Полуниця-Хвоя-Липа">Полуниця-Хвоя-Липа</option>
+      <option value="Лаванда-Лайм">Лаванда-Лайм</option>
+      <option value="Смородина-Базилік">Смородина-Базилік</option>
+    </select>
+  </div>
+</div>
+
+<button onclick="addToCart('${p.name}','${p.imgs[0]}',this)">Купити</button>
     </div>`;
 
   container.appendChild(div);
+  const checkbox = div.querySelector('.tea-checkbox');
+const selectBox = div.querySelector('.tea-select');
+const priceEl = div.querySelector('.final-price');
+
+checkbox.addEventListener('change', () => {
+  if(checkbox.checked){
+    selectBox.style.display = 'block';
+    priceEl.innerText = Number(p.price) + 35;
+  } else {
+    selectBox.style.display = 'none';
+    priceEl.innerText = p.price;
+  }
+});
 
   // --- Инициализация карусели ---
  (function initCarousel(div){
@@ -415,23 +474,43 @@ function updateCartCount(){
   document.getElementById('cart-count').innerText = cartCount;
 }
 
-function addToCart(name,img,price,btn){
+function addToCart(name,img,btn){
+  const product = btn.closest('.product');
+  const checkbox = product.querySelector('.tea-checkbox');
+  const select = product.querySelector('select');
+
+  let price = Number(product.dataset.price);
+  let tea = null;
+
+  if(checkbox.checked){
+    price += 35;
+    tea = select.value;
+  }
+
   let cart = localStorage.getItem('cartItems')?JSON.parse(localStorage.getItem('cartItems')):[];
-  let found = cart.find(x=>x.name===name);
+
+  let itemName = name + (tea ? ` + чай (${tea})` : '');
+
+  let found = cart.find(x=>x.name===itemName);
+
   if(found) found.qty++;
-  else cart.push({name,img,price,qty:1});
+  else cart.push({name:itemName,img,price,qty:1});
+
   localStorage.setItem('cartItems',JSON.stringify(cart));
   updateCartCount();
 
-  // Анимация "летящей" картинки
-  const imgEl = btn.closest('.product').querySelector('.carousel img');
+  // анимация
+  const imgEl = product.querySelector('.carousel img');
   const flying = imgEl.cloneNode(true);
   flying.classList.add('flying-img');
   document.body.appendChild(flying);
+
   const rect = imgEl.getBoundingClientRect();
   flying.style.left = rect.left+'px';
   flying.style.top = rect.top+'px';
+
   const cartRect = document.getElementById('cart-button').getBoundingClientRect();
+
   setTimeout(()=>{ 
     flying.style.left = cartRect.left+'px';
     flying.style.top = cartRect.top+'px';
@@ -439,6 +518,7 @@ function addToCart(name,img,price,btn){
     flying.style.height='30px';
     flying.style.opacity='0.5';
   },10);
+
   setTimeout(()=>document.body.removeChild(flying),900);
 }
 
