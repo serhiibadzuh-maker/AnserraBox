@@ -582,12 +582,39 @@ function sortProducts(order){
 }
 
 updateCartCount();
-let lightbox = document.getElementById('lightbox');
-let lightboxImg = document.getElementById('lightbox-img');
+let lightbox;
+let lightboxImg;
+
+window.onload = () => {
+  lightbox = document.getElementById('lightbox');
+  lightboxImg = document.getElementById('lightbox-img');
+
+  document.getElementById('close-lightbox').onclick = ()=>{
+    lightbox.style.display = 'none';
+  };
+
+  document.getElementById('lightbox-next').onclick = ()=>{
+    lightboxIndex = (lightboxIndex + 1) % lightboxImgs.length;
+    updateLightbox();
+  };
+
+  document.getElementById('lightbox-prev').onclick = ()=>{
+    lightboxIndex = (lightboxIndex - 1 + lightboxImgs.length) % lightboxImgs.length;
+    updateLightbox();
+  };
+
+  // закрытие по клику на фон
+  lightbox.onclick = (e) => {
+    if(e.target === lightbox){
+      lightbox.style.display = 'none';
+    }
+  };
+};
 let lightboxIndex = 0;
 let lightboxImgs = [];
 
 function openLightbox(imgs, index){
+  console.log("ОТКРЫВАЕМ", imgs, index); 
   lightboxImgs = imgs;
   lightboxIndex = index;
   updateLightbox();
